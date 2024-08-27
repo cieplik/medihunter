@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 
 Appointment = namedtuple(
     "Appointment",
-    ["doctor_name", "clinic_name", "appointment_datetime", "is_phone_consultation"],
+    ["doctor_name", "clinic_name", "appointment_datetime", "is_phone_consultation", "specialization_name"],
 )
 
 
@@ -23,7 +23,7 @@ class MedicoverSession:
         self.password = password
         self.session = requests.Session()
         self.headers = {
-            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0",
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:107.0) Gecko/20100101 Firefox/107.0",
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
             "Accept-Language": "pl,en-US,en;q=0.5",
             "Accept-Encoding": "gzip, deflate, br",
@@ -180,6 +180,7 @@ class MedicoverSession:
             clinic_name=r["clinicName"],
             appointment_datetime=r["appointmentDate"],
             is_phone_consultation=r["isPhoneConsultation"],
+            specialization_name=r["specializationName"],
         )
         return appointment
 
@@ -205,7 +206,7 @@ class MedicoverSession:
             "Content-Type": "application/json",
             "Host": BASE_URL,
             "Origin": "https://mol.medicover.pl",
-            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:90.0) Gecko/20100101 Firefox/90.0",
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:107.0) Gecko/20100101 Firefox/107.0",
         }
 
         region_id = int(kwargs["region"])
